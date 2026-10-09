@@ -1,0 +1,7 @@
+project_id = "oyvfcgnpfnvbqmxbkzkv"
+
+[functions.notifications]
+verify_jwt = false
+
+[[functions.notifications.schedules]]
+cron = "*/5 * * * *"

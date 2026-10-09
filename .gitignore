@@ -1,0 +1,15 @@
+node_modules
+.next
+out
+dist
+coverage
+.vercel
+.env
+.env.*
+!.env.example
+*.log
+.DS_Store
+tsconfig.tsbuildinfo
+packages/db/src/generated
+apps/web/public/uploads/*
+!apps/web/public/uploads/.gitkeep

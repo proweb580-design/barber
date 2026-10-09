@@ -1,0 +1,25 @@
+{
+  "name": "axat",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "concurrently -n web,api -c cyan,magenta \"npm run dev -w web\" \"npm run dev -w api\"",
+    "dev:web": "npm run dev -w web",
+    "dev:api": "npm run dev -w api",
+    "dev:miniapp": "npm run dev -w miniapp",
+    "build": "npm run build -w web",
+    "lint": "npm run lint -w web",
+    "db:generate": "npm run generate -w db",
+    "db:migrate": "npm run migrate -w db",
+    "db:seed": "npm run seed -w db"
+  },
+  "dependencies": {
+    "proweb-skills": "^0.1.1"
+  },
+  "devDependencies": {
+    "concurrently": "^10.0.5"
+  }
+}

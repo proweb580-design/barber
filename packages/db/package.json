@@ -1,0 +1,26 @@
+{
+  "name": "db",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/client.ts"
+  },
+  "scripts": {
+    "generate": "prisma generate",
+    "postinstall": "prisma generate",
+    "migrate": "prisma migrate deploy",
+    "seed": "tsx prisma/seed.ts"
+  },
+  "dependencies": {
+    "@prisma/adapter-pg": "^7.10.0",
+    "@prisma/client": "^7.10.0",
+    "pg": "^8.23.1"
+  },
+  "devDependencies": {
+    "@types/pg": "^8.23.1",
+    "dotenv": "^18.0.5",
+    "prisma": "^7.10.0",
+    "tsx": "^4.23.15",
+    "typescript": "^6.0.3"
+  }
+}
