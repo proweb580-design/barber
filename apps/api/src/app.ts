@@ -1,5 +1,5 @@
 import cors from "@fastify/cors";
-import Fastify from "fastify";
+import Fastify, { type FastifyInstance } from "fastify";
 import { ZodError, z } from "zod";
 import {
   availability,
@@ -69,7 +69,16 @@ function originOf(value: string) {
 }
 
 function allowedOrigins() {
-  const values = [process.env.WEB_ORIGIN ?? "http://localhost:3000", process.env.APP_URL ?? "", process.env.MINIAPP_URL ?? "", "http://localhost:5173", "http://127.0.0.1:5173", "http://localhost:3000"];
+  const values = [
+    process.env.CORS_ORIGIN ?? "",
+    process.env.WEB_ORIGIN ?? "http://localhost:3000",
+    process.env.APP_URL ?? "",
+    process.env.MINIAPP_URL ?? "",
+    "http://localhost:3000",
+    "http://localhost:3010",
+    "http://localhost:5173",
+    "http://127.0.0.1:5173",
+  ];
   return new Set(values.flatMap((value) => value.split(",")).map((item) => originOf(item)).filter(Boolean));
 }
 
@@ -79,10 +88,16 @@ function headerValue(value: string | string[] | undefined) {
 
 export async function buildApp() {
   const app = Fastify({ logger: true, bodyLimit: 4 * 1024 * 1024 });
+  await registerRoutes(app);
+  return app;
+}
+
+export async function registerRoutes(app: FastifyInstance) {
   initBot(process.env.TELEGRAM_BOT_TOKEN);
   const origin = allowedOrigins();
 
   await app.register(cors, {
+    allowedHeaders: ["content-type", "x-telegram-init-data"],
     origin(requestOrigin, callback) {
       if (!requestOrigin || origin.has(requestOrigin) || requestOrigin.endsWith(".vercel.app")) {
         callback(null, true);

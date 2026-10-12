@@ -4,7 +4,9 @@
   "type": "module",
   "scripts": {
     "dev": "tsx watch src/index.ts",
+    "postinstall": "node scripts/bundle.mjs",
     "start": "tsx src/index.ts",
+    "lint": "tsc --noEmit",
     "typecheck": "tsc --noEmit",
     "test": "tsx --test --test-concurrency=1 src/slots.test.ts src/telegram.test.ts src/booking.race.test.ts src/telegram.session.test.ts src/bot.test.ts src/reminders.test.ts src/admin.test.ts src/analytics.test.ts",
     "notifications": "tsx src/run-notifications.ts",

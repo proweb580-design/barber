@@ -11,5 +11,6 @@ coverage
 .DS_Store
 tsconfig.tsbuildinfo
 packages/db/src/generated
+apps/api/src/vercel-bundle.mjs
 apps/web/public/uploads/*
 !apps/web/public/uploads/.gitkeep

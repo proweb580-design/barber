@@ -116,3 +116,6 @@ export async function configureBot(current: Bot) {
   }
   await current.api.setChatMenuButton({ menu_button: { type: "commands" } });
 }
+
+export const installMenu = configureBot;
+

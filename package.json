@@ -11,6 +11,7 @@
     "dev:api": "npm run dev -w api",
     "dev:miniapp": "npm run dev -w miniapp",
     "build": "npm run build -w web",
+    "postinstall": "node apps/api/scripts/bundle.mjs",
     "lint": "npm run lint -w web",
     "db:generate": "npm run generate -w db",
     "db:migrate": "npm run migrate -w db",
