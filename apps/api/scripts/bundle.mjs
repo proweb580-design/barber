@@ -32,7 +32,7 @@ run(path.join(findPackage("prisma"), "build", "index.js"), ["generate", "--schem
 
 const esbuild = await import(pathToFileURL(path.join(findPackage("esbuild"), "lib", "main.js")).href);
 await esbuild.build({
-  entryPoints: [path.join(apiRoot, "src", "main.ts")],
+  entryPoints: [path.join(apiRoot, "src", "index.ts")],
   bundle: true,
   platform: "node",
   format: "esm",
@@ -43,6 +43,13 @@ await esbuild.build({
     {
       name: "prisma-ts",
       setup(build) {
+        build.onResolve({ filter: /^db$/ }, () => {
+          const clientTs = path.resolve(apiRoot, "../../packages/db/src/client.ts");
+          if (fs.existsSync(clientTs)) return { path: clientTs };
+          const clientJs = path.resolve(apiRoot, "../../packages/db/dist/src/client.js");
+          if (fs.existsSync(clientJs)) return { path: clientJs };
+          return null;
+        });
         build.onResolve({ filter: /^\.{1,2}\/.*\.js$/ }, (args) => {
           const tsPath = path.resolve(args.resolveDir, args.path.replace(/\.js$/, ".ts"));
           if (fs.existsSync(tsPath)) return { path: tsPath };
